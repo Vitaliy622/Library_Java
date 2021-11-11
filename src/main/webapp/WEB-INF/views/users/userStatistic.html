@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>STATISTIC</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <caption>YOUR STATISTIC</caption>
+
+    <tr>
+        <th scope="col">Books Read</th>
+        <td th:text="${bookCount}">count</td>
+    </tr>
+    <tr>
+        <th scope="col">Average Time Of Reading(hours)</th>
+        <td th:text="${averageReadingTime}">time</td>
+    </tr>
+    <tr>
+        <th scope="col">Reading now</th>
+
+        <td>
+            <th:block th:each="book:${readingNow}">
+                <p th:text="${book}">book</p>
+            </th:block>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>
