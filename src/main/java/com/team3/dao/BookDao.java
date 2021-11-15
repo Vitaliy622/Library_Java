@@ -17,4 +17,6 @@ public interface BookDao {
     List<Book> findBooksByTitle(String title);
 
     List<Book> findBooksByAuthor(String name);
+
+    void updateBook(Book book);
 }

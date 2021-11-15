@@ -30,7 +30,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book findById(Long id) {
-        return sessionFactory.getCurrentSession().get(Book.class,id);
+        return sessionFactory.getCurrentSession().get(Book.class, id);
     }
 
     @Override
@@ -65,5 +65,10 @@ public class BookDaoImpl implements BookDao {
         // .createQuery("select Book.bookId,Book.title,Book.description,Book.genre,Book.count,Author.name,Author.surname FROM Author ,BookAuthor ,Book WHERE Author.id=BookAuthor.author_id AND Book.bookId=BookAuthor.book_id AND Author.name=:name ");
         q.setParameter("name", name);
         return q.getResultList();
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        sessionFactory.getCurrentSession().update(book);
     }
 }
