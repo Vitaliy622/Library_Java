@@ -107,6 +107,10 @@ public class OrderServiceImpl implements OrderService {
         Date returnDate = new Date(millis);
         Order order = orderDao.findOrderById(id);
 
+        Book book = order.getBook();
+        book.setCount(book.getCount() + 1);
+        bookDao.updateBook(book);
+
         order.setReturnBook(returnDate);
         order.setReturned(true);
         order.setOrderStatus(OrderStatus.CLOSED);
