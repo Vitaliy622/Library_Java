@@ -35,9 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                 .csrf().disable()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/registration").permitAll()
+                .antMatchers("/", "/registration").permitAll()
+                .antMatchers("/books/{id}/reserveBook").hasAuthority("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -62,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider());
     }
 }
