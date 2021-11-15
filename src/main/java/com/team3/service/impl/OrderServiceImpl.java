@@ -1,5 +1,6 @@
 package com.team3.service.impl;
 
+import com.team3.dao.BookDao;
 import com.team3.dao.OrderDao;
 import com.team3.entity.Book;
 import com.team3.entity.Order;
@@ -19,14 +20,16 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
+    private final BookDao bookDao;
 
     private final long millis = System.currentTimeMillis();
     private final Date date = new Date(millis);
 
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao) {
+    public OrderServiceImpl(OrderDao orderDao, BookDao bookDao) {
         this.orderDao = orderDao;
+        this.bookDao = bookDao;
     }
 
     //TODO: add implementation to methods
@@ -59,6 +62,8 @@ public class OrderServiceImpl implements OrderService {
             order.setBook(book);
             order.setReserveDate(date);
             order.setOrderStatus(OrderStatus.RESERVED);
+            book.setCount(book.getCount() - 1);
+            bookDao.updateBook(book);
             orderDao.addOrder(order);
             return true;
         }
