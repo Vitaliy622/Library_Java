@@ -44,5 +44,4 @@ public class AuthorsController {
         authorsService.save(author);
         return "redirect: show";
     }
-
 }
