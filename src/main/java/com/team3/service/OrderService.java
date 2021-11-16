@@ -33,6 +33,6 @@ public interface OrderService {
 
     void returnBook(Long id);
 
-    boolean updateOrder(Order order);
+    void updateOrder(Order order);
 
 }

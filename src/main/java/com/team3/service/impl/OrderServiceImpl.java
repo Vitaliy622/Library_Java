@@ -89,7 +89,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<Order> findAllBorrowed(){return orderDao.findAllOrdersWithBorrowedStatus();}
+    public List<Order> findAllBorrowed() {
+        return orderDao.findAllOrdersWithBorrowedStatus();
+    }
 
     @Override
     @Transactional
@@ -154,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public boolean updateOrder(Order order){
-        return orderDao.updateOrder(order);
+    public void updateOrder(Order order) {
+        orderDao.updateOrder(order);
     }
 }
