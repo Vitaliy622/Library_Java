@@ -13,8 +13,12 @@ public interface OrderDao {
 
     List<Order> findAllOrders();
 
+    List<Order> findAllOrdersWithBorrowedStatus();
+
     List<Order> getUsersRepeatedOrders(Long user, Long book);
 
     List<Order> getHowManyBooksWereBeenReadByUser(String email);
+
+    boolean updateOrder(Order order);
 
 }

@@ -89,6 +89,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    public List<Order> findAllBorrowed(){return orderDao.findAllOrdersWithBorrowedStatus();}
+
+    @Override
+    @Transactional
     public void borrowBook(Long id) {
         Date borrowDate = new Date(millis);
         Order order = orderDao.findOrderById(id);
@@ -146,5 +150,11 @@ public class OrderServiceImpl implements OrderService {
             books.add(o.getBook().getTitle());
         }
         return books;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateOrder(Order order){
+        return orderDao.updateOrder(order);
     }
 }

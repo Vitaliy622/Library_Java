@@ -38,9 +38,16 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> findAllOrdersWithBorrowedStatus() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select a from Order a where orderStatus='BORROWED'", Order.class)
+                .getResultList();
+    }
+
+    @Override
     public List<Order> getUsersRepeatedOrders(Long user, Long book) {
         return sessionFactory.getCurrentSession()
-                .createQuery("select a from Order a WHERE a.user.id=:user and a.book.bookId=:book",Order.class)
+                .createQuery("select a from Order a WHERE a.user.id=:user and a.book.bookId=:book", Order.class)
                 .setParameter("user", user)
                 .setParameter("book", book)
                 .getResultList();
@@ -49,10 +56,18 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getHowManyBooksWereBeenReadByUser(String email) {
         return sessionFactory.getCurrentSession().createQuery(
-                "select a from Order a where a.user.email=:email " +
-                        "and a.orderStatus<>'RESERVED' " +
-                        "and a.orderStatus<>'CANCELED'",Order.class)
+                        "select a from Order a where a.user.email=:email " +
+                                "and a.orderStatus<>'RESERVED' " +
+                                "and a.orderStatus<>'CANCELED'", Order.class)
                 .setParameter("email", email)
                 .getResultList();
+    }
+
+    @Override
+    public boolean updateOrder(Order order) {
+        if (order != null) {
+            sessionFactory.getCurrentSession().update(order);
+            return true;
+        } else return false;
     }
 }

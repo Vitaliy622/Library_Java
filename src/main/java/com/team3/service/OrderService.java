@@ -23,6 +23,8 @@ public interface OrderService {
 
     List<Order> findAllOrders();
 
+    List<Order> findAllBorrowed();
+
     void borrowBook(Long id);
 
     int getAverageReadingTimeOfUser(String user);
@@ -30,5 +32,7 @@ public interface OrderService {
     List<String> getBooksThatUserReading(String email);
 
     void returnBook(Long id);
+
+    boolean updateOrder(Order order);
 
 }
