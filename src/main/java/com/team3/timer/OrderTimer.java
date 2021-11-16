@@ -37,12 +37,6 @@ public class OrderTimer {
         }
     }
 
-    public long checkIfNotNull(Date date) {
-        if (date != null) {
-            return date.getTime();
-        } else return 0;
-    }
-
     public void checkIfReservationDate() {
         for (Order order : orderService.findAllOrders()) {
             long reservationDeadline = addOneDay(order.getReserveDate()).getTime();
