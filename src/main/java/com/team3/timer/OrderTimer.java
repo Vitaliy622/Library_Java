@@ -21,7 +21,7 @@ public class OrderTimer {
         this.orderService = orderService;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 19 * * * *")
     public void checkOrders() {
         checkOrdersIfBooksReturnedInTime();
         checkIfReservationDate();

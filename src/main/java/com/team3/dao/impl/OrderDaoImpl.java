@@ -64,10 +64,9 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public boolean updateOrder(Order order) {
+    public void updateOrder(Order order) {
         if (order != null) {
             sessionFactory.getCurrentSession().update(order);
-            return true;
-        } else return false;
+        }
     }
 }

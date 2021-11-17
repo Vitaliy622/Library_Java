@@ -19,6 +19,6 @@ public interface OrderDao {
 
     List<Order> getHowManyBooksWereBeenReadByUser(String email);
 
-    boolean updateOrder(Order order);
+    void updateOrder(Order order);
 
 }
