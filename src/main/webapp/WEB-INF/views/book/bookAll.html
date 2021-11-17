@@ -22,7 +22,8 @@
 
         <th:block th:each="book:${books}">
             <tr th:each="author:${book.authors}">
-                <td><a th:text="${book.getBookId()}" th:href="@{/books/{id}(id=${book.getBookId()})}">id</a></td>                <td th:text ="${author.name+author.surname}">name</td>
+                <td><a th:text="${book.getBookId()}" th:href="@{/books/{id}(id=${book.getBookId()})}">id</a></td>
+                <td th:text ="${author.name+author.surname}">name</td>
                 <td th:text = "${book.getTitle}">title</td>
                 <td th:text = "${book.getGenre}">genre</td>
                 <td th:text = "${book.getCount}">count</td>
