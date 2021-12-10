@@ -11,6 +11,10 @@
     <input type="submit" value="logout">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+<form th:if="${user != 'anonim'}" th:action="@{/stat}" method="post">
+    <input type="submit" value="logout">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 <table>
     <caption><h1>WELCOME TO LIBRARY!</h1></caption>
     <tr>

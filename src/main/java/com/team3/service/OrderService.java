@@ -4,10 +4,11 @@ import com.team3.entity.Book;
 import com.team3.entity.Order;
 import com.team3.entity.User;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface OrderService {
-    void getTheMostPopularBook();
+    List<Book> getTheMostPopularBook();
 
     void getTheMostUnpopularBook();
 
@@ -27,7 +28,7 @@ public interface OrderService {
 
     void borrowBook(Long id);
 
-    int getAverageReadingTimeOfUser(String user);
+    BigInteger getAverageReadingTimeOfUser(String user);
 
     List<String> getBooksThatUserReading(String email);
 

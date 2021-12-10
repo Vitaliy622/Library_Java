@@ -18,8 +18,10 @@ public class HelloController {
 
     @GetMapping
     public String showMainPage( Model model,Authentication authentication) {
-        if(authentication!=null) model.addAttribute("user",userService.getUserByEmail(authentication.getName()).getName());
-        else model.addAttribute("user","anonim");
+        if(authentication!=null){
+            model.addAttribute("user",userService.getUserByEmail(authentication.getName()).getName());
+            model.addAttribute("statistic",userService.getUserByEmail(authentication.getName()));
+        } else model.addAttribute("user","anonim");
         return "hello";
     }
 

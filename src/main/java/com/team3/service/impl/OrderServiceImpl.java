@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +35,8 @@ public class OrderServiceImpl implements OrderService {
 
     //TODO: add implementation to methods
     @Override
-    public void getTheMostPopularBook() {
+    public List<Book> getTheMostPopularBook() {
+        return orderDao.getMostPopularBooks();
     }
 
     @Override
@@ -54,19 +56,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public boolean reserveBook(Order order, User user, Book book) {
-        int repeatedOrders = orderDao.getUsersRepeatedOrders(user.getId(), book.getBookId()).size();
-        if (repeatedOrders >= 1) {
-            return false;
-        } else {
-            order.setUser(user);
-            order.setBook(book);
-            order.setReserveDate(date);
-            order.setOrderStatus(OrderStatus.RESERVED);
-            book.setCount(book.getCount() - 1);
-            bookDao.updateBook(book);
-            orderDao.addOrder(order);
-            return true;
+        List<Order> listOfRepeatedOrders = orderDao.getUsersRepeatedOrders(user.getId(), book.getBookId());
+        int repeatedOrders = listOfRepeatedOrders.size();
+        for (Order o : listOfRepeatedOrders) {
+            if (repeatedOrders >= 1 && o.getOrderStatus() == OrderStatus.BORROWED) {
+                return false;
+            } else {
+                order.setUser(user);
+                order.setBook(book);
+                order.setReserveDate(date);
+                order.setOrderStatus(OrderStatus.RESERVED);
+                book.setCount(book.getCount() - 1);
+                bookDao.updateBook(book);
+                orderDao.addOrder(order);
+            }
         }
+        return true;
     }
 
     @Override
@@ -132,14 +137,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public int getAverageReadingTimeOfUser(String user) {
+    public BigInteger getAverageReadingTimeOfUser(String user) {
         List<Order> orders = orderDao.getHowManyBooksWereBeenReadByUser(user);
-        int time = 0;
+        BigInteger time = BigInteger.valueOf(0);
         int toHour = 3600000;
         for (Order order : orders) {
-            time += millis - order.getTakeBook().getTime();
+            time = time.add(BigInteger.valueOf(order.getReturnBook().getTime()).subtract(BigInteger.valueOf(order.getTakeBook().getTime())));
         }
-        time = time / toHour;
+        time = time.divide(BigInteger.valueOf(toHour));
         return time;
     }
 
