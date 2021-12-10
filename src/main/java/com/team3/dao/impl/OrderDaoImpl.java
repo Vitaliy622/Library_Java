@@ -1,6 +1,7 @@
 package com.team3.dao.impl;
 
 import com.team3.dao.OrderDao;
+import com.team3.entity.Book;
 import com.team3.entity.Order;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -69,4 +70,18 @@ public class OrderDaoImpl implements OrderDao {
             sessionFactory.getCurrentSession().update(order);
         }
     }
+
+    @Override
+    public List<Book> getMostPopularBooks() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT a from Book a left join Order on Order.book.bookId=a.bookId group by a.title order by count(Order.book) desc "
+                        , Book.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Book> getMostUnpopularBooks() {
+        return null;
+    }
+
 }

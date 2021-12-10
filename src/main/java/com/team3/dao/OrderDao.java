@@ -1,5 +1,6 @@
 package com.team3.dao;
 
+import com.team3.entity.Book;
 import com.team3.entity.Order;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface OrderDao {
 
     void updateOrder(Order order);
 
+    List<Book>getMostPopularBooks();
+
+    List<Book>getMostUnpopularBooks();
 }
