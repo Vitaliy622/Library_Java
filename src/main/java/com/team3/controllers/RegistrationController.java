@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegistrationController {
 
     private final UserService userService;
+    private static final String REGISTRATION_FORM = "users/registration";
 
     @Autowired
     public RegistrationController(UserService userService) {
@@ -27,21 +28,21 @@ public class RegistrationController {
     @GetMapping()
     public String addUser(Model model) {
         model.addAttribute("user", new User());
-        return "users/registration";
+        return REGISTRATION_FORM;
     }
 
     @PostMapping()
     public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "users/registration";
+            return REGISTRATION_FORM;
         }
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             model.addAttribute("passwordError", "Password is not equals!");
-            return "users/registration";
+            return REGISTRATION_FORM;
         }
         if (!userService.addUser(user)) {
             model.addAttribute("emailError", "User already exist!");
-            return "users/registration";
+            return REGISTRATION_FORM;
         }
         return "redirect:/login";
     }
