@@ -42,6 +42,6 @@ public class AuthorsController {
     @PostMapping("/add")
     public String create(@ModelAttribute("author") Author author) {
         authorsService.save(author);
-        return "redirect: show";
+        return "redirect:/author/show";
     }
 }
