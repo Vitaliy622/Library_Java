@@ -1,20 +1,24 @@
+body {margin:0;}
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    width: 100%;
+    top: 0;
+    position: fixed;
     overflow: hidden;
     background-color: #333;
 }
 
 li {
-    float: left;
+    float: right;
     border-right: 1px solid #bbb;
 }
 li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px 16px;
     text-decoration: none;
     border: none;
     font-size: 1em;
@@ -26,7 +30,7 @@ input[type=submit]{
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px 16px;
     text-decoration: none;
     font-family: "Times New Roman", Times, serif;
 }

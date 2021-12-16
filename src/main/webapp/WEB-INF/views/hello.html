@@ -7,8 +7,10 @@
 </head>
 <body>
 <div th:replace="~{/navbar :: navbar(${user})}"></div>
+<div style="padding:20px;margin-top:30px;">
+    <h1>WELCOME TO LIBRARY!</h1>
+    <a th:href="@{/books/show}">BOOKS</a>
+</div>
 
-<h1>WELCOME TO LIBRARY!</h1>
-<a th:href="@{/books/show}">BOOKS</a>
 </body>
 </html>
