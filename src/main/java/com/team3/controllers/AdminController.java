@@ -18,8 +18,8 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String getUsersForAdmin(Model model){
-    model.addAttribute("users",userService.getAllUsers());
-    return "users/users";
-}
+    public String getUsersForAdmin(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "users/users";
+    }
 }
