@@ -7,7 +7,7 @@
 </head>
 <body>
 <ul th:fragment="navbar(user)" class="box">
-    <li class="active" style="float: left"><a th:href="@{/}">LIBRARY</a> </li>
+    <li class="active" style="float: left"><a th:href="@{/}">LIBRARY</a></li>
     <li><p class="active" th:text="${user}"></p></li>
     <li><a th:href="@{/registration}">REGISTRATION</a></li>
     <li><a th:if="${user == 'anonim'}" th:href="@{/login}">LOGIN</a></li>

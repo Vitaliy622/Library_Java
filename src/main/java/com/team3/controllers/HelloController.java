@@ -17,19 +17,18 @@ public class HelloController {
     }
 
     @GetMapping
-    public String showMainPage( Model model,Authentication authentication) {
-        if(authentication!=null){
-            model.addAttribute("user",userService.getUserByEmail(authentication.getName()).getName());
-            model.addAttribute("statistic",userService.getUserByEmail(authentication.getName()));
-        } else model.addAttribute("user","anonim");
+    public String showMainPage(Model model, Authentication authentication) {
+        if (authentication != null) {
+            model.addAttribute("user", userService.getUserByEmail(authentication.getName()).getName());
+            model.addAttribute("statistic", userService.getUserByEmail(authentication.getName()));
+        } else model.addAttribute("user", "anonim");
         return "hello";
     }
 
 
-
     @GetMapping("users/{id}")
-    public String getUser(Model model, @PathVariable Long id){
-        model.addAttribute("user",userService.getUserById(id));
+    public String getUser(Model model, @PathVariable Long id) {
+        model.addAttribute("user", userService.getUserById(id));
         return "users/user";
     }
 }

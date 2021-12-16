@@ -1,4 +1,7 @@
-body {margin:0;}
+body {
+    margin: 0;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -14,6 +17,7 @@ li {
     float: right;
     border-right: 1px solid #bbb;
 }
+
 li a {
     display: block;
     color: white;
@@ -23,7 +27,8 @@ li a {
     border: none;
     font-size: 1em;
 }
-input[type=submit]{
+
+input[type=submit] {
     border: none;
     font-size: 1em;
     background-color: #333;
@@ -34,7 +39,8 @@ input[type=submit]{
     text-decoration: none;
     font-family: "Times New Roman", Times, serif;
 }
-input[type=submit]:hover:not(.active){
+
+input[type=submit]:hover:not(.active) {
     background-color: #111;
 }
 

@@ -91,8 +91,7 @@ public class LibConfig implements WebMvcConfigurer {
 
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
