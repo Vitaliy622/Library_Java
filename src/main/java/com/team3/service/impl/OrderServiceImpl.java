@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -142,7 +141,8 @@ public class OrderServiceImpl implements OrderService {
         BigInteger time = BigInteger.valueOf(0);
         int toHour = 3600000;
         for (Order order : orders) {
-            time = time.add(BigInteger.valueOf(order.getReturnBook().getTime()).subtract(BigInteger.valueOf(order.getTakeBook().getTime())));
+            time = time.add(BigInteger.valueOf(order.getReturnBook().getTime())
+                    .subtract(BigInteger.valueOf(order.getTakeBook().getTime())));
         }
         time = time.divide(BigInteger.valueOf(toHour));
         return time;
@@ -150,13 +150,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<String> getBooksThatUserReading(String email) {
+    public String getBooksThatUserReading(String email) {
         List<Order> orders = orderDao.getHowManyBooksWereBeenReadByUser(email);
-        List<String> books = new ArrayList<>();
+        String book = "";
         for (Order o : orders) {
-            books.add(o.getBook().getTitle());
+            if (o.getOrderStatus().equals(OrderStatus.CLOSED)) {
+                book = "nothing";
+            } else book = o.getBook().getTitle();
         }
-        return books;
+        return book;
     }
 
     @Override

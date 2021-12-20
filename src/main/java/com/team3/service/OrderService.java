@@ -30,7 +30,7 @@ public interface OrderService {
 
     BigInteger getAverageReadingTimeOfUser(String user);
 
-    List<String> getBooksThatUserReading(String email);
+    String getBooksThatUserReading(String email);
 
     void returnBook(Long id);
 
