@@ -2,11 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <th:block th:insert="~{/navbar :: link}">a</th:block>
+    <link href="/resources/navibar.css" type="text/css" rel="stylesheet">
     <title>LIBRARY</title>
 </head>
 <body>
-<div th:replace="~{/navbar :: navbar(${user})}"></div>
+<ul th:fragment="navbar">
+    <li class="active" style="float: left"><a th:href="@{/}">LIBRARY</a></li>
+    <li><a class="active" th:href="@{/statistic}" th:text="${user}"></a></li>
+    <li><a th:href="@{/registration}">REGISTRATION</a></li>
+    <li><a th:if="${user == 'anonim'}" th:href="@{/login}">LOGIN</a></li>
+    <li>
+        <form th:if="${user != 'anonim'}" th:action="@{/logout}" method="post">
+            <input type="submit" value="LOGOUT">
+        </form>
+    </li>
+</ul>
 <div style="padding:20px;margin-top:30px;">
     <h1>WELCOME TO LIBRARY!</h1>
     <a th:href="@{/books/show}">BOOKS</a>
