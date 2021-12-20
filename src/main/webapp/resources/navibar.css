@@ -28,7 +28,7 @@ li a {
     font-size: 1em;
 }
 
-input[type=submit] {
+input[value="LOGOUT"] {
     border: none;
     font-size: 1em;
     background-color: #333;
@@ -40,7 +40,7 @@ input[type=submit] {
     font-family: "Times New Roman", Times, serif;
 }
 
-input[type=submit]:hover:not(.active) {
+input[value="LOGOUT"]:hover:not(.active) {
     background-color: #111;
 }
 
