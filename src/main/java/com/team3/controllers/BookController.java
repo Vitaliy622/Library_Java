@@ -36,7 +36,7 @@ public class BookController {
         return "book/bookAll";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/show/{id}")
     public String getBookById(@PathVariable Long id, Model model) {
         model.addAttribute("book", bookService.findById(id));
         return "book/bookById";
@@ -50,7 +50,7 @@ public class BookController {
         return mav;
     }
 
-    @PostMapping("/{id}/reserveBook")
+    @PostMapping("/show/{id}/reserveBook")
     public String reserveBooks(@PathVariable("id") Long id, Order order, Authentication authentication) {
         Book book = bookService.findById(id);
         User user = userService.getUserByEmail(authentication.getName());
@@ -61,7 +61,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/{id}/reserveBook")
+    @GetMapping("/show/{id}/reserveBook")
     public String reserveSuccess(@PathVariable("id") Long id, Model model) {
         Book book = bookService.findById(id);
         model.addAttribute("book", book);

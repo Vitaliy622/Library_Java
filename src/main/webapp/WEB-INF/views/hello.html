@@ -8,7 +8,7 @@
 <body>
 <ul th:fragment="navbar">
     <li class="active" style="float: left"><a th:href="@{/}">LIBRARY</a></li>
-    <li><a class="active" th:href="@{/statistic}" th:text="${user}"></a></li>
+    <li class="active"><a th:href="@{/statistic}" th:text="${user}"></a></li>
     <li><a th:href="@{/registration}">REGISTRATION</a></li>
     <li><a th:if="${user == 'anonim'}" th:href="@{/login}">LOGIN</a></li>
     <li>
@@ -21,6 +21,5 @@
     <h1>WELCOME TO LIBRARY!</h1>
     <a th:href="@{/books/show}">BOOKS</a>
 </div>
-
 </body>
 </html>

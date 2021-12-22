@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> listOfRepeatedOrders = orderDao.getUsersRepeatedOrders(user.getId(), book.getBookId());
         int repeatedOrders = listOfRepeatedOrders.size();
         for (Order o : listOfRepeatedOrders) {
-            if (repeatedOrders >= 1 && o.getOrderStatus() == OrderStatus.BORROWED) {
+            if (repeatedOrders > 1 || o.getOrderStatus() == OrderStatus.BORROWED) {
                 return false;
             } else {
                 order.setUser(user);
