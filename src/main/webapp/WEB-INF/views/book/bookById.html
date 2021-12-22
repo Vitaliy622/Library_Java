@@ -2,18 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:insert="~{/hello :: link}">a</th:block>
+    <title th:text="${book.getTitle()}">Title</title>
 </head>
 <body>
-<a href="/books/show">BACK</a>
-<p th:text="'ID:'+${book.getBookId()}">VALUE</p>
-<h1 th:text="${book.getTitle()}">VALUE</h1>
-<p th:text="${book.getDescription()}">VALUE</p>
-<p th:text="${book.getGenre()}">VALUE</p>
-<p th:text="${book.getCount()}">VALUE</p>
-
+<div th:replace="~{/hello :: navbar}"></div>
+<div style="padding:20px;margin-top:40px;">
+    <a href="/books/show">BACK</a>
+    <p th:text="'ID:'+${book.getBookId()}">VALUE</p>
+    <h1 th:text="${book.getTitle()}">VALUE</h1>
+    <p th:text="${book.getDescription()}">VALUE</p>
+    <p th:text="${book.getGenre()}">VALUE</p>
+    <p th:text="${book.getCount()}">VALUE</p>
+    <form th:if="${book.getCount()>0}" th:action="@{/books/show/{id}/reserveBook(id=${book.getBookId()})}" method="get">
+        <input type="submit" value="ORDER">
+    </form>
+</div>
 <form>
-
 </form>
 </body>
 </html>

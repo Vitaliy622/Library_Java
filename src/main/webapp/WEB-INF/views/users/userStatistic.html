@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <th:block th:insert="~{/hello :: link}">a</th:block>
     <title>STATISTIC</title>
     <style>
         table, th, td {
@@ -10,27 +11,30 @@
     </style>
 </head>
 <body>
-<table>
-    <caption>YOUR STATISTIC</caption>
+<div th:replace="~{/hello :: navbar}"></div>
+<div style="padding:20px;margin-top:40px;">
+    <table>
+        <caption>YOUR STATISTIC</caption>
 
-    <tr>
-        <th scope="col">Books Read</th>
-        <td th:text="${bookCount}">count</td>
-    </tr>
-    <tr>
-        <th scope="col">Average Time Of Reading(hours)</th>
-        <td th:text="${averageReadingTime}">time</td>
-    </tr>
-    <tr>
-        <th scope="col">Reading now</th>
+        <tr>
+            <th scope="col">Books Read</th>
+            <td th:text="${bookCount}">count</td>
+        </tr>
+        <tr>
+            <th scope="col">Average Time Of Reading(hours)</th>
+            <td th:text="${averageReadingTime}">time</td>
+        </tr>
+        <tr>
+            <th scope="col">Reading now</th>
 
-        <td>
-            <th:block th:each="book:${readingNow}">
-                <p th:text="${book}">book</p>
-            </th:block>
-        </td>
+            <td>
+                <th:block th:each="book:${readingNow}">
+                    <p th:text="${book}">book</p>
+                </th:block>
+            </td>
 
-    </tr>
-</table>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
