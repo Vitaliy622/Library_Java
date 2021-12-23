@@ -42,7 +42,7 @@ public class BookController {
         return "book/bookById";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/show/search")
     public ModelAndView showBooksByAuthorName(@RequestParam(required = false, value = "name") String name) {
         List<Book> list = bookService.findBooksByAuthor(name);
         ModelAndView mav = new ModelAndView("book/bookByAuthor");
