@@ -74,9 +74,15 @@ public class BookController {
         return "orders/reserveBook";
     }
 
-    @GetMapping("/popular")
-    public String getMostPopularBooks(Model model){
-    model.addAttribute("books",orderService.getTheMostPopularBook());
-    return "book/bookAll";
+    @GetMapping("/show/popular")
+    public String getMostPopularBooks(Model model) {
+        model.addAttribute("books", orderService.getTheMostPopularBook());
+        return "book/bookAll";
+    }
+
+    @GetMapping("/show/unpopular")
+    public String getMostUnpopularBooks(Model model) {
+        model.addAttribute("books", orderService.getTheMostUnpopularBook());
+        return "book/bookAll";
     }
 }

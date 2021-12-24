@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,14 +33,18 @@ public class OrderServiceImpl implements OrderService {
         this.bookDao = bookDao;
     }
 
-    //TODO: add implementation to methods
     @Override
+    @Transactional
     public List<Book> getTheMostPopularBook() {
         return orderDao.getMostPopularBooks();
     }
 
     @Override
-    public void getTheMostUnpopularBook() {
+    @Transactional
+    public List<Book> getTheMostUnpopularBook() {
+        List<Book> books = orderDao.getMostPopularBooks();
+        Collections.reverse(books);
+        return books;
     }
 
     @Override
@@ -48,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.getHowManyBooksWereBeenReadByUser(email).size();
     }
 
+    //TODO: add implementation to methods
     @Override
     public void getHowManyBooksWereGivingInSelectedPeriod() {
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderService {
     List<Book> getTheMostPopularBook();
 
-    void getTheMostUnpopularBook();
+    List<Book> getTheMostUnpopularBook();
 
     int getHowManyBooksWereBeenReadByUser(String email);
 

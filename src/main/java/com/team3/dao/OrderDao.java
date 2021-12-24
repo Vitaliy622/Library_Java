@@ -22,7 +22,6 @@ public interface OrderDao {
 
     void updateOrder(Order order);
 
-    List<Book>getMostPopularBooks();
+    List<Book> getMostPopularBooks();
 
-    List<Book>getMostUnpopularBooks();
 }

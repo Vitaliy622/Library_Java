@@ -13,6 +13,14 @@
         <input type="text" name="name" id="name" th:value="${name}"/>
         <input type="submit" value="Search"/>
     </form>
+    <form th:action="@{/books/show/popular}" method="get">
+        <label for="name">Sort by popularity(popular-unpopular):</label>
+        <input type="submit" value="Sort"/>
+    </form>
+    <form th:action="@{/books/show/unpopular}" method="get">
+        <label for="name">Sort by popularity(unpopular-popular):</label>
+        <input type="submit" value="Sort"/>
+    </form>
 </div>
 <table>
     <caption>BOOKS</caption>
