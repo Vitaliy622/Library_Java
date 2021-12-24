@@ -57,9 +57,9 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getHowManyBooksWereBeenReadByUser(String email) {
         return sessionFactory.getCurrentSession().createQuery(
-                        "select a from Order a where a.user.email=:email " +
-                                "and a.orderStatus<>'RESERVED' " +
-                                "and a.orderStatus<>'CANCELED'", Order.class)
+                "select a from Order a where a.user.email=:email " +
+                        "and a.orderStatus<>'RESERVED' " +
+                        "and a.orderStatus<>'CANCELED'", Order.class)
                 .setParameter("email", email)
                 .getResultList();
     }
@@ -74,14 +74,8 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Book> getMostPopularBooks() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT a from Book a left join Order on Order.book.bookId=a.bookId group by a.title order by count(Order.book) desc "
+                .createQuery("SELECT a from Book a join fetch a.authors left join Order b on b.book.bookId=a.bookId group by a.title order by count(b.book.bookId) desc "
                         , Book.class)
                 .getResultList();
     }
-
-    @Override
-    public List<Book> getMostUnpopularBooks() {
-        return null;
-    }
-
 }
