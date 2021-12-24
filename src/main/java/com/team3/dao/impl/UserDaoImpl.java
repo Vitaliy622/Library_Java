@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     @Override
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) {
         User user = sessionFactory.getCurrentSession().load(User.class, id);
         sessionFactory.getCurrentSession().delete(user);
     }
