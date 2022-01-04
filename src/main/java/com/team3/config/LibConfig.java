@@ -89,7 +89,6 @@ public class LibConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")

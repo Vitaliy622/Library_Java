@@ -8,7 +8,6 @@
 <body>
 <div th:replace="~{/hello :: navbar}"></div>
 <div style="padding:20px;margin-top:40px;">
-    <a href="/books/show">BACK</a>
     <p th:text="'ID:'+${book.getBookId()}">VALUE</p>
     <h1 th:text="${book.getTitle()}">VALUE</h1>
     <p th:text="${book.getDescription()}">VALUE</p>
