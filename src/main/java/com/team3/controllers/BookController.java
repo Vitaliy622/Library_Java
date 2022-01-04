@@ -30,9 +30,16 @@ public class BookController {
         this.userService = userService;
     }
 
-    @GetMapping("/show")
-    public String showAllBooks(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    @GetMapping("/show/page/{pageNum}")
+    public String showAllBooks(@PathVariable int pageNum, Model model) {
+        model.addAttribute("books", bookService.findAll(pageNum,10));
+        int next = pageNum;
+        int previous=pageNum;
+        next++;
+        previous--;
+        model.addAttribute("next",next);
+        model.addAttribute("previous",previous);
+
         return "book/bookAll";
     }
 

@@ -35,8 +35,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookDao.findAll();
+    public List<Book> findAll(int pageNum, int pageCount) {
+        return bookDao.findAll(pageNum,pageCount);
     }
 
     @Override

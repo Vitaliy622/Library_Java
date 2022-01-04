@@ -34,13 +34,18 @@
 
     <th:block th:each="book:${books}">
         <tr th:each="author:${book.authors}">
-            <td><a th:text="${book.getBookId()}" th:href="@{/books/show/{id}(id=${book.getBookId()})}">id</a></td>
+            <td><a target="_blank" th:text="${book.getBookId()}" th:href="@{/books/show/{id}(id=${book.getBookId()})}">id</a>
+            </td>
             <td th:text="${author.name+author.surname}">name</td>
             <td th:text="${book.getTitle}">title</td>
             <td th:text="${book.getGenre}">genre</td>
             <td th:text="${book.getCount}">count</td>
         </tr>
     </th:block>
+    <tr>
+        <td><a th:if="${pageNum>0}" th:href="@{/books/show/page/{pageNum}(pageNum=${previous})}">Previous</a></td>
+        <td><a th:href="@{/books/show/page/{next}(next=${next})}">Next</a></td>
+    </tr>
 </table>
 </body>
 </html>

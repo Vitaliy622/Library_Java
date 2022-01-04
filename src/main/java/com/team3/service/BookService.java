@@ -12,7 +12,7 @@ public interface BookService {
 
     Book remove(int id);
 
-    List<Book> findAll();
+    List<Book> findAll(int pageNum, int pageCount);
 
     List<Book> findBooksByTitle(String title);
 

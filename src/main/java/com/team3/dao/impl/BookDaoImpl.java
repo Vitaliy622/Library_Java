@@ -38,9 +38,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findAll() {
+    public List<Book> findAll(int pageNum,int pageCount) {
         return sessionFactory.getCurrentSession()
-                .createQuery("select a from Book a join fetch a.authors", Book.class)
+                .createQuery("select a from Book a join fetch a.authors order by a.bookId asc ", Book.class)
+                .setFirstResult(pageNum*pageCount)
+                .setMaxResults(pageCount)
                 .getResultList();
     }
 
