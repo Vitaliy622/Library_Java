@@ -39,12 +39,18 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findAll(int pageNum, int pageCount) {
+        String fQuery = "select b.bookId from Book  b order by b.bookId";
+        String sQuery = "select distinct b from Book  b left join fetch b.authors where b.bookId in (:bookIds) order by b.bookId asc ";
+        return returnBookList(pageNum, pageCount, fQuery, sQuery);
+    }
+
+    public List<Book> returnBookList(int pageNum, int pageCount, String idsQuery, String listQuery) {
         Session session = sessionFactory.getCurrentSession();
-        List<Long> bookIds = session.createQuery("select b.bookId from Book  b order by b.bookId", Long.class)
+        List<Long> bookIds = session.createQuery(idsQuery, Long.class)
                 .setFirstResult(pageNum * pageCount)
                 .setMaxResults(pageCount)
                 .getResultList();
-        return session.createQuery("select distinct b from Book  b left join fetch b.authors where b.bookId in (:bookIds) order by b.bookId asc ", Book.class)
+        return session.createQuery(listQuery, Book.class)
                 .setParameter("bookIds", bookIds)
                 .setHint("hibernate.query.passDistinctThrough", false)
                 .getResultList();
