@@ -22,6 +22,7 @@ public class BookController {
     private final BookService bookService;
     private final OrderService orderService;
     private final UserService userService;
+    private static final int booksInPage = 10;
 
     @Autowired
     public BookController(BookService bookService, OrderService orderService, UserService userService) {
@@ -32,13 +33,19 @@ public class BookController {
 
     @GetMapping("/show/page/{pageNum}")
     public String showAllBooks(@PathVariable int pageNum, Model model) {
-        model.addAttribute("books", bookService.findAll(pageNum,10));
+        model.addAttribute("books", bookService.findAll(pageNum, booksInPage));
         int next = pageNum;
-        int previous=pageNum;
+        int previous = pageNum;
         next++;
         previous--;
-        model.addAttribute("next",next);
-        model.addAttribute("previous",previous);
+        if (!bookService.findAll(next, booksInPage).isEmpty()) {
+            model.addAttribute("next", next);
+            model.addAttribute("isEmpty", false);
+        } else {
+            model.addAttribute("next", next - 1);
+            model.addAttribute("isEmpty", true);
+        }
+        model.addAttribute("previous", previous);
 
         return "book/bookAll";
     }

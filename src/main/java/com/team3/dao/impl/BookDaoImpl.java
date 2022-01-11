@@ -38,11 +38,15 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findAll(int pageNum,int pageCount) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("select a from Book a join fetch a.authors order by a.bookId asc ", Book.class)
-                .setFirstResult(pageNum*pageCount)
+    public List<Book> findAll(int pageNum, int pageCount) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Long> bookIds = session.createQuery("select b.bookId from Book  b order by b.bookId", Long.class)
+                .setFirstResult(pageNum * pageCount)
                 .setMaxResults(pageCount)
+                .getResultList();
+        return session.createQuery("select distinct b from Book  b left join fetch b.authors where b.bookId in (:bookIds) order by b.bookId asc ", Book.class)
+                .setParameter("bookIds", bookIds)
+                .setHint("hibernate.query.passDistinctThrough", false)
                 .getResultList();
     }
 

@@ -42,10 +42,8 @@
             <td th:text="${book.getCount}">count</td>
         </tr>
     </th:block>
-    <tr>
-        <td><a th:if="${pageNum>0}" th:href="@{/books/show/page/{pageNum}(pageNum=${previous})}">Previous</a></td>
-        <td><a th:href="@{/books/show/page/{next}(next=${next})}">Next</a></td>
-    </tr>
 </table>
+<a th:if="${pageNum>0}" th:href="@{/books/show/page/{pageNum}(pageNum=${previous})}">Previous</a>
+<a th:if="${!isEmpty}" th:href="@{/books/show/page/{next}(next=${next})}">Next</a>
 </body>
 </html>
