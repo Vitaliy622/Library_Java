@@ -48,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getUsersRepeatedOrders(Long user, Long book) {
         return sessionFactory.getCurrentSession()
-                .createQuery("select a from Order a WHERE a.user.id=:user and a.book.bookId=:book", Order.class)
+                .createQuery("select a from Order a WHERE a.user.id=:user and a.book.bookId=:book and a.orderStatus='BORROWED'or a.orderStatus='RESERVED'", Order.class)
                 .setParameter("user", user)
                 .setParameter("book", book)
                 .getResultList();

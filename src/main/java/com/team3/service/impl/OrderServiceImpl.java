@@ -63,20 +63,16 @@ public class OrderServiceImpl implements OrderService {
     public boolean reserveBook(Order order, User user, Book book) {
         List<Order> listOfRepeatedOrders = orderDao.getUsersRepeatedOrders(user.getId(), book.getBookId());
         int repeatedOrders = listOfRepeatedOrders.size();
-        for (Order o : listOfRepeatedOrders) {
-            if (repeatedOrders > 1 || o.getOrderStatus() == OrderStatus.BORROWED) {
-                return false;
-            } else {
-                order.setUser(user);
-                order.setBook(book);
-                order.setReserveDate(date);
-                order.setOrderStatus(OrderStatus.RESERVED);
-                book.setCount(book.getCount() - 1);
-                bookDao.updateBook(book);
-                orderDao.addOrder(order);
-            }
-        }
-        return true;
+        if (repeatedOrders < 1) {
+            order.setUser(user);
+            order.setBook(book);
+            order.setReserveDate(date);
+            order.setOrderStatus(OrderStatus.RESERVED);
+            book.setCount(book.getCount() - 1);
+            bookDao.updateBook(book);
+            orderDao.addOrder(order);
+            return true;
+        } else return false;
     }
 
     @Override
