@@ -22,7 +22,9 @@ public class BookController {
     private final BookService bookService;
     private final OrderService orderService;
     private final UserService userService;
-    private static final int booksInPage = 10;
+    private static final int BOOKS_IN_PAGE = 10;
+    private static final String BOOKS_ATTRIBUTE = "books";
+    private static final String ALL_BOOKS_PAGE = "book/bookAll";
 
     @Autowired
     public BookController(BookService bookService, OrderService orderService, UserService userService) {
@@ -33,21 +35,11 @@ public class BookController {
 
     @GetMapping("/show/page/{pageNum}")
     public String showAllBooks(@PathVariable int pageNum, Model model) {
-        model.addAttribute("books", bookService.findAll(pageNum, booksInPage));
-        int next = pageNum;
-        int previous = pageNum;
-        next++;
-        previous--;
-        if (!bookService.findAll(next, booksInPage).isEmpty()) {
-            model.addAttribute("next", next);
-            model.addAttribute("isEmpty", false);
-        } else {
-            model.addAttribute("next", next - 1);
-            model.addAttribute("isEmpty", true);
-        }
-        model.addAttribute("previous", previous);
-
-        return "book/bookAll";
+        int totalResults = bookService.findAll().size();
+        boolean empty = bookService.findAll(pageNum + 1, BOOKS_IN_PAGE).isEmpty();
+        model.addAttribute(BOOKS_ATTRIBUTE, bookService.findAll(pageNum, BOOKS_IN_PAGE));
+        pageElements(pageNum, model, empty, totalResults);
+        return ALL_BOOKS_PAGE;
     }
 
     @GetMapping("/show/{id}")
@@ -68,10 +60,10 @@ public class BookController {
     public String reserveBooks(@PathVariable("id") Long id, Order order, Authentication authentication) {
         Book book = bookService.findById(id);
         User user = userService.getUserByEmail(authentication.getName());
-        if (!orderService.reserveBook(order, user, book)) {
-            return "orders/failConfirm";
-        } else {
+        if (orderService.reserveBook(order, user, book)) {
             return "redirect:/books/successOrderCreation";
+        } else {
+            return "orders/failConfirm";
         }
     }
 
@@ -88,15 +80,32 @@ public class BookController {
         return "orders/reserveBook";
     }
 
-    @GetMapping("/show/popular")
-    public String getMostPopularBooks(Model model) {
-        model.addAttribute("books", orderService.getTheMostPopularBook());
-        return "book/bookAll";
+    @GetMapping("/show/popular/{pageNum}")
+    public String getMostPopularBooks(@PathVariable int pageNum, Model model) {
+        int totalResults = bookService.findAll().size();
+        boolean empty = bookService.getMostPopularBooks(pageNum + 1, BOOKS_IN_PAGE).isEmpty();
+        model.addAttribute(BOOKS_ATTRIBUTE, bookService.getMostPopularBooks(pageNum, BOOKS_IN_PAGE));
+        pageElements(pageNum, model, empty, totalResults);
+        return ALL_BOOKS_PAGE;
     }
 
-    @GetMapping("/show/unpopular")
-    public String getMostUnpopularBooks(Model model) {
-        model.addAttribute("books", orderService.getTheMostUnpopularBook());
-        return "book/bookAll";
+    @GetMapping("/show/unpopular/{pageNum}")
+    public String getMostUnpopularBooks(@PathVariable int pageNum, Model model) {
+        int totalResults = bookService.findAll().size();
+        boolean empty = bookService.getMostUnpopularBooks(pageNum + 1, BOOKS_IN_PAGE).isEmpty();
+        model.addAttribute(BOOKS_ATTRIBUTE, bookService.getMostUnpopularBooks(pageNum, BOOKS_IN_PAGE));
+        pageElements(pageNum, model, empty, totalResults);
+        return ALL_BOOKS_PAGE;
+    }
+
+    public void pageElements(int pageNum, Model model, boolean empty, int totalResults) {
+        int totalPages = (totalResults + BOOKS_IN_PAGE - 1) / BOOKS_IN_PAGE;
+        int next = pageNum + 1;
+        int previous = pageNum - 1;
+        model.addAttribute("isEmpty", empty);
+        model.addAttribute("next", next);
+        model.addAttribute("previous", previous);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNum);
     }
 }
