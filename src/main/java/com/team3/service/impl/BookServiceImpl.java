@@ -36,7 +36,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll(int pageNum, int pageCount) {
-        return bookDao.findAll(pageNum,pageCount);
+        return bookDao.findAll(pageNum - 1, pageCount);
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return bookDao.findAll();
     }
 
     @Override
@@ -47,5 +52,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findBooksByAuthor(String name) {
         return bookDao.findBooksByAuthor(name);
+    }
+
+    @Override
+    public List<Book> getMostPopularBooks(int pageNum, int pageCount) {
+        return bookDao.getMostPopularBooks(pageNum - 1, pageCount);
+    }
+
+    @Override
+    public List<Book> getMostUnpopularBooks(int pageNum, int pageCount) {
+        return bookDao.getMostUnpopularBooks(pageNum - 1, pageCount);
     }
 }

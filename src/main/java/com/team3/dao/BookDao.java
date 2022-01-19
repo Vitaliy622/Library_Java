@@ -19,4 +19,10 @@ public interface BookDao {
     List<Book> findBooksByAuthor(String name);
 
     void updateBook(Book book);
+
+    List<Book> getMostPopularBooks(int pageNum, int pageCount);
+
+    List<Book> getMostUnpopularBooks(int pageNum, int pageCount);
+
+    List<Book> findAll();
 }

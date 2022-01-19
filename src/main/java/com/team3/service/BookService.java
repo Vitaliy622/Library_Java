@@ -14,7 +14,13 @@ public interface BookService {
 
     List<Book> findAll(int pageNum, int pageCount);
 
+    List<Book> findAll();
+
     List<Book> findBooksByTitle(String title);
 
     List<Book> findBooksByAuthor(String name);
+
+    List<Book> getMostPopularBooks(int pageNum, int pageCount);
+
+    List<Book> getMostUnpopularBooks(int pageNum, int pageCount);
 }
