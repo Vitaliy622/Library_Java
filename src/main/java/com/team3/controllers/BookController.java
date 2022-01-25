@@ -48,9 +48,15 @@ public class BookController {
         return "book/bookById";
     }
 
-    @GetMapping("/show/search")
-    public ModelAndView showBooksByAuthorName(@RequestParam(required = false, value = "name") String name) {
-        List<Book> list = bookService.findBooksByAuthor(name);
+    @GetMapping("/show/search/{pageNum}")
+    public ModelAndView showBooksByAuthorName(@PathVariable int pageNum,
+                                              @RequestParam(required = false, value = "name") String name,
+                                              Model model) {
+        List<Book> list = bookService.findBooksByAuthor(pageNum, BOOKS_IN_PAGE, name);
+        boolean empty = bookService.findBooksByAuthor(pageNum + 1, BOOKS_IN_PAGE, name).isEmpty();
+        long totalResults = bookService.findCountOfBooksByAuthor(name);
+        model.addAttribute("name", name);
+        pageElements(pageNum, model, empty, totalResults);
         ModelAndView mav = new ModelAndView("book/bookByAuthor");
         mav.addObject("list", list);
         return mav;
@@ -98,8 +104,8 @@ public class BookController {
         return ALL_BOOKS_PAGE;
     }
 
-    public void pageElements(int pageNum, Model model, boolean empty, int totalResults) {
-        int totalPages = (totalResults + BOOKS_IN_PAGE - 1) / BOOKS_IN_PAGE;
+    public void pageElements(int pageNum, Model model, boolean empty, long totalResults) {
+        long totalPages = (totalResults + BOOKS_IN_PAGE - 1) / BOOKS_IN_PAGE;
         int next = pageNum + 1;
         int previous = pageNum - 1;
         model.addAttribute("isEmpty", empty);

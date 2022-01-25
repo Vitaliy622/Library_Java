@@ -9,7 +9,7 @@
 <div th:replace="~{/hello :: navbar}"></div>
 <div style="padding:20px;margin-top:40px;">
     <a href="/books/show/page/1">Show all</a>
-    <form th:action="@{/books/show/search}" method="get">
+    <form th:action="@{/books/show/search/1}" method="get">
         <label for="name">Search book:</label>
         <input type="text" name="name" id="name" th:value="${name}"/>
         <input type="submit" value="Search"/>
@@ -37,7 +37,12 @@
         </tr>
     </th:block>
 </table>
-
-
+<h1 th:if="${list.size()==0}" th:text="${'No books with name '+name}">No books with name+${name}</h1>
+<a th:if="${pageNum>1}" th:href="@{${previous+'?name='+name}}">previous</a>
+<span th:if="${list.size()!=0}" th:each="i: ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${i != currentPage && i!=0}" th:href="@{ ${i+'?name='+name}}">[[${i}]]</a>
+        <span th:unless="${i != currentPage}">[[${i}]]</span>
+</span>
+<a th:if="${!isEmpty}" th:href="@{${next+'?name='+name}}">next</a>
 </body>
 </html>
