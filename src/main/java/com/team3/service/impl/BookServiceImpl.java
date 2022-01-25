@@ -50,8 +50,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findBooksByAuthor(String name) {
-        return bookDao.findBooksByAuthor(name);
+    public List<Book> findBooksByAuthor(int pageNum, int pageCount, String name) {
+        return bookDao.findBooksByAuthor(pageNum - 1, pageCount, name);
+    }
+
+    @Override
+    public Long findCountOfBooksByAuthor(String name) {
+        return bookDao.findCountOfBooksByAuthor(name);
     }
 
     @Override

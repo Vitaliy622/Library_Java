@@ -16,7 +16,9 @@ public interface BookDao {
 
     List<Book> findBooksByTitle(String title);
 
-    List<Book> findBooksByAuthor(String name);
+    List<Book> findBooksByAuthor(int pageNum,int pageCount,String name);
+
+    Long findCountOfBooksByAuthor(String name);
 
     void updateBook(Book book);
 

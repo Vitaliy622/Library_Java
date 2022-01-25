@@ -67,6 +67,7 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+
     @Override
     public List<Book> findBooksByTitle(String title) {
         return sessionFactory.getCurrentSession()
@@ -76,19 +77,27 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findBooksByAuthor(String name) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("SELECT b\n" +
-                        "FROM Book b\n" +
-                        "          JOIN fetch b.authors" +
-                        "          JOIN fetch BookAuthor pa ON pa.bookId = b.bookId\n" +
-                        "          JOIN fetch Author a ON a.id = pa.authorId\n" +
-                        "WHERE a.surname LIKE :name\n" +
-                        "   OR a.name LIKE :name " +
-                        "   OR b.title LIKE :name", Book.class)
+    public List<Book> findBooksByAuthor(int pageNum, int pageCount, String name) {
+        List<Long> bookIds = sessionFactory.getCurrentSession()
+                .createQuery("SELECT b.bookId FROM Book b JOIN  BookAuthor pa ON pa.bookId = b.bookId JOIN  Author a ON a.id = pa.authorId WHERE a.surname LIKE :name OR a.name LIKE :name OR b.title LIKE :name", Long.class)
                 .setParameter("name", name)
+                .setFirstResult(pageNum * pageCount)
+                .setMaxResults(pageCount)
+                .getResultList();
+        return sessionFactory.getCurrentSession()
+                .createQuery("select b FROM Book b left join fetch b.authors where b.bookId in (:bookIds) order by b.bookId", Book.class)
+                .setParameter("bookIds", bookIds)
                 .getResultList();
     }
+
+    @Override
+    public Long findCountOfBooksByAuthor(String name) {
+        return sessionFactory.getCurrentSession().createQuery("SELECT b FROM Book b JOIN  BookAuthor pa ON pa.bookId = b.bookId JOIN  Author a ON a.id = pa.authorId WHERE a.surname LIKE :name OR a.name LIKE :name OR b.title LIKE :name")
+                .setParameter("name", name)
+                .stream()
+                .count();
+    }
+
 
     @Override
     public void updateBook(Book book) {
