@@ -8,7 +8,7 @@
 <body>
 <div th:replace="~{/hello :: navbar}"></div>
 <div style="padding:20px;margin-top:40px;">
-    <form th:action="@{/books/show/search}" method="get">
+    <form th:action="@{/books/show/search/1}" method="get">
         <label for="name">Search book:</label>
         <input type="text" name="name" id="name" th:value="${name}"/>
         <input type="submit" value="Search"/>
